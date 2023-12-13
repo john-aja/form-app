@@ -74,7 +74,7 @@
         <td>Hobbies</td>
       </thead>
 
-      <ng-container *ngFor="let item of data">
+      <ng-container *ngFor="let item of data; index as i">
         <tr class="row">
           <td>
             {{ item.name }}
@@ -89,7 +89,7 @@
             {{ item.hobbies }}
           </td>
           <td>
-            <button>Delete</button>
+            <button (click)="deleteRow(i)">Delete</button>
           </td>
         </tr>
       </ng-container>

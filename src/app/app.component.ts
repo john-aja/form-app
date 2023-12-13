@@ -35,24 +35,28 @@ export class AppComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.formGb.value);
     const getVal = this.formGb.value;
 
     let localData: any = [];
+    localData.push(getVal);
 
     const getExistingData = localStorage.getItem('tableData');
 
     let parseExistingData;
     if (getExistingData) {
       parseExistingData = JSON.parse(getExistingData);
+    } else {
+      parseExistingData = null;
     }
     if (parseExistingData !== null) {
-      localData.push(parseExistingData);
+      localData.push(...parseExistingData);
     }
-    localData.push(getVal);
+
     this.data = localData;
+
     const saveData = JSON.stringify(localData);
     localStorage.setItem('tableData', saveData);
+    this.formGb.reset();
   }
 
   reset() {
@@ -65,6 +69,22 @@ export class AppComponent implements OnInit {
       const formData = JSON.parse(getFromLs);
       console.log(formData);
       this.data = formData;
+    } else {
+      this.data = [];
+    }
+  }
+
+  deleteRow(index: number) {
+    const getFromLs = localStorage.getItem('tableData');
+    if (getFromLs) {
+      const formData = JSON.parse(getFromLs);
+      const afterDelete = formData.filter((v: any, i: any) => {
+        if (i === index) {
+          return;
+        } else return v;
+      });
+      this.data = afterDelete;
+      console.log(this.data);
     } else {
       this.data = [];
     }
