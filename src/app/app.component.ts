@@ -13,10 +13,6 @@ import 'zone.js';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'form-app';
-  formGb: FormGroup;
-  data: any = [];
-  hobbiesControl = new FormArray([new FormControl('', Validators.required)]);
   constructor(private fb: FormBuilder) {
     this.formGb = this.fb.group({
       name: ['', Validators.required],
@@ -26,9 +22,26 @@ export class AppComponent implements OnInit {
       verify: ['', Validators.required],
     });
   }
+
   ngOnInit(): void {
     this.getDataForTable();
+
+    // //////////////////////////////////////
+
+    this.studentFormGroup = this.fb.group({
+      name: ['', Validators.required],
+      subOne: ['', Validators.required],
+      subTwo: ['', Validators.required],
+      subThree: ['', Validators.required],
+    });
+
+    this.getPassedStudents();
   }
+
+  title = 'form-app';
+  formGb: FormGroup;
+  data: any = [];
+  hobbiesControl = new FormArray([new FormControl('', Validators.required)]);
 
   addHobbies() {
     this.hobbiesControl.push(new FormControl('', Validators.required));
@@ -88,5 +101,75 @@ export class AppComponent implements OnInit {
     } else {
       this.data = [];
     }
+  }
+
+  // //////////////////////////////////////
+
+  studenList: any = [
+    { name: 'Zack', subOne: '56', subTwo: '85', subThree: '12' },
+    {
+      name: 'Mahi',
+      subOne: '86',
+      subTwo: '75',
+      subThree: '82',
+    },
+  ];
+  editForm!: boolean;
+  studentForm!: boolean;
+  passedStudents: any;
+
+  studentFormGroup!: FormGroup;
+  currentIndex!: number;
+
+  openForm() {
+    this.studentForm = true;
+  }
+
+  submitForm() {
+    if (this.studentForm) {
+      console.log(this.studentFormGroup.value);
+      const formData = this.studentFormGroup.value;
+      this.studenList.push(formData);
+      this.getPassedStudents();
+      this.studentForm = false;
+      this.studentFormGroup.reset();
+    }
+    if (this.editForm) {
+      const formData = this.studentFormGroup.value;
+      this.studentFormGroup.reset();
+      this.studenList = this.studenList.map((v: any) => {
+        if (v.name === formData.name) {
+          v = { ...formData };
+          return v;
+        } else return v;
+      });
+      this.editForm = false;
+      this.getPassedStudents();
+    }
+  }
+
+  getPassedStudents() {
+    this.studenList = this.studenList.map((v: any) => {
+      if (
+        parseInt(v.subOne) > 34 &&
+        parseInt(v.subTwo) > 34 &&
+        parseInt(v.subThree) > 34
+      ) {
+        v.status = 'PASS';
+        return v;
+      } else {
+        v.status = 'FAIL';
+        return v;
+      }
+    });
+  }
+
+  editField(index: number) {
+    this.currentIndex = index;
+    this.editForm = true;
+
+    const currentRow = this.studenList[index];
+
+    this.studentFormGroup.patchValue(currentRow);
   }
 }

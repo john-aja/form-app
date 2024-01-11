@@ -43,18 +43,18 @@
   border: 1px solid black;
 }
 
-table {
+.sec-col table {
   border: 1px solid black;
   border-collapse: collapse;
   width: 100%;
   padding: 2rem;
 }
 
-thead {
+.sec-col thead {
   border-bottom: 1px solid black;
 }
 
-td {
+.sec-col td {
   padding: 1rem;
 }
 
@@ -66,4 +66,50 @@ td {
 .row {
   padding: 1rem;
   border-bottom: 1px solid black;
+}
+
+/* Stop watch */
+.stop-watch {
+  background-color: gray;
+}
+
+h1 {
+  color: rgb(10, 238, 10);
+}
+
+.digit {
+  font-size: 3rem;
+  margin-left: 2rem;
+}
+
+.txt {
+  font-size: 30px;
+}
+
+#buttons {
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.btn {
+  width: 100px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* design task */
+
+.design-task table {
+  border: none;
+  width: 70%;
+  padding: 1rem;
+  border-collapse: collapse;
+}
+
+.design-task thead tr th {
+  padding: 1.4rem;
+  background-color: rgb(184, 184, 184);
 }

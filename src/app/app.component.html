@@ -96,3 +96,50 @@
     </table>
   </div>
 </div>
+
+<!-- ////////////////////////////////////////////////// -->
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>SubOne</th>
+    <th>SubTwo</th>
+    <th>SubThree</th>
+    <th>Status</th>
+    <th>Edit</th>
+  </tr>
+  <ng-container *ngFor="let item of studenList; index as i">
+    <tr>
+      <td>{{ item.name }}</td>
+      <td>{{ item.subOne }}</td>
+      <td>{{ item.subTwo }}</td>
+      <td>{{ item.subThree }}</td>
+      <td>{{ item.status }}</td>
+      <td style="cursor: pointer" (click)="editField(i)">Edit</td>
+    </tr>
+  </ng-container>
+</table>
+
+<button (click)="openForm()">Add</button>
+
+<ng-container *ngIf="studentForm || editForm">
+  <form [formGroup]="studentFormGroup">
+    <div>
+      <label for="name">Name</label>
+      <input formControlName="name" name="name" type="text" />
+    </div>
+    <div>
+      <label for="subOne">Subject 1</label>
+      <input formControlName="subOne" name="subOne" type="number" />
+    </div>
+    <div>
+      <label for="subTwo">Subject 2</label>
+      <input formControlName="subTwo" name="subTwo" type="number" />
+    </div>
+    <div>
+      <label for="subThree">Subject 3</label>
+      <input formControlName="subThree" name="subThree" type="number" />
+    </div>
+    <button (click)="submitForm()">{{ editForm ? "Update" : "Submit" }}</button>
+  </form>
+</ng-container>
